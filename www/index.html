@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+	<meta charset="utf-8">
+	<!-- iPad/iPhone specific css below, add after your main css >
+	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+	-->
+	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+	<script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+    <script type="text/javascript">
+
+
+	// If you want to prevent dragging, uncomment this section
+	/*
+	function preventBehavior(e) 
+	{ 
+      e.preventDefault(); 
+    };
+	document.addEventListener("touchmove", preventBehavior, false);
+	*/
+	
+	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+	for more details -jm */
+	/*
+	function handleOpenURL(url)
+	{
+		// TODO: do something with the url passed in.
+	}
+	*/
+	
+	document.addEventListener("deviceready", onDeviceReady, false);
+	var _clock;
+	
+	function onDeviceReady()
+	{
+		startClock();
+        _clock = window.setInterval(startClock, 1000);
+	}
+	
+	function startClock()
+	{
+		// get the date and how long are we from launch
+		var TargetDate = new Date(2012,2,23,9,0);
+		var Today = new Date();
+		var diff = TargetDate.getTime() - Today.getTime();
+		
+		if (diff < 0)
+		{
+			$('#clock_counter').html('NOW').addClass('now');
+			$('#clock_unit').html('');
+			window.clearInterval(_clock);
+			_clock = false;
+			return;
+		}
+
+		
+		if (diff > 86400000) // more than a day
+		{
+			dl = parseInt(diff / 86400000);
+			dl2 = 'day';
+		}
+		else if (diff > 3600000)
+		{
+			dl = parseInt(diff / 3600000);
+			dl2 = 'hour';
+		}
+		else if (diff > 60000)
+		{
+			dl = parseInt(diff / 60000);
+			dl2 = 'minute';
+		}
+		else
+		{	
+			dl = parseInt(diff / 1000);
+			dl2 = 'second';
+		}
+		if (dl>1) dl2 = dl2 + 's';
+		$('#clock_counter').html(dl);
+		$('#clock_unit').html(dl2 + ' left');
+		
+	}
+    
+    </script>
+    <link rel="stylesheet" href="screen.css" />
+  </head>
+  <body>
+
+      <div id="clock">
+      <div id="clock_counter">99</div>
+      <div id="clock_unit">days left</div>
+      </div>
+      
+      <a class="button g" href="profile.html">My Profile</a>
+      <a class="button g" href="scanner.html">QR Scanner</a>
+
+      <a class="button" href="page1.html">Links To</a>      
+
+      <a class="button" href="page2.html">Other</a>      
+
+      <a class="button" href="page3.html">Pages</a>      
+
+
+      
+  </body>
+</html>
+<!-- for non device, we hv to fake the device ready -->
+<script>
+$(function() {
+//	onDeviceReady();
+});
+</script>

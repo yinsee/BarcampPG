@@ -1,0 +1,49 @@
+body {
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	width:300px;
+	margin:10px;padding:0;
+}
+
+#clock {
+	text-align:center;
+	color:white;
+	text-shadow:0 -2px 0 #000;
+	border-radius:20px;
+	background:#222;
+	padding:20px;
+}
+
+#clock_counter {
+	font-size:160px;
+	font-weight: bold;
+	letter-spacing:-10px;
+}
+#clock_counter.now {
+	font-size:60px;
+}
+
+#clock_unit {
+	font-size:30px;
+	letter-spacing:-2px;
+}
+
+a.button {
+	text-align:center;
+	text-decoration:none;
+	margin:10px 0;
+	border-radius:20px;
+	background:#28f;
+	border:1px solid #26f;
+	color:black;
+	display:block;
+	padding:10px;
+	text-shadow:0 -1px 0 #25f;
+	color:white;
+}
+
+a.g {
+	background:#f82;
+	border:1px solid #f62;
+	text-shadow:0 -1px 0 #f52;
+
+}

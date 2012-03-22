@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+	<meta charset="utf-8">
+	<!-- iPad/iPhone specific css below, add after your main css >
+	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+	-->
+	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+	<script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="jquery.qrcode.js"></script>
+    <script type="text/javascript">
+
+
+	// If you want to prevent dragging, uncomment this section
+	/*
+	function preventBehavior(e) 
+	{ 
+      e.preventDefault(); 
+    };
+	document.addEventListener("touchmove", preventBehavior, false);
+	*/
+	
+	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+	for more details -jm */
+	/*
+	function handleOpenURL(url)
+	{
+		// TODO: do something with the url passed in.
+	}
+	*/
+	
+	document.addEventListener("deviceready", onDeviceReady, false);
+	var db, watch;
+	function sqlError(tx,err)
+	{
+		alert("Error processing SQL: "+tx.message);
+	}
+	
+	function onDeviceReady()
+	{
+	    db = window.openDatabase("profile", "1.0", "profile", 10000000);
+	    var createDB = function (tx) {
+	       //  tx.executeSql('DROP TABLE IF EXISTS profile');
+	         tx.executeSql('CREATE TABLE IF NOT EXISTS profile (name unique, value)');
+	    };
+	    
+		db.transaction( createDB, sqlError, function () {
+	        // show or hide the signup/update button
+	        var  querySuccess = function(tx, results) {
+	        	if (results.rows.length <= 0)
+	        	{
+	        		// fresh
+	        		$('#register').show();
+	        	}
+	        	else
+	        	{
+	        		// populate data into form
+	        		for(var i=0;i<results.rows.length;i++)
+	        		{
+		        		var e = results.rows.item(i);
+		        		$('#form *[name='+e.name+']').val(e.value);
+		        		if (e.name=='photo')
+					      $('#photo').attr('src', "data:image/jpeg;base64," + e.value);
+		        	}
+	        		$('#updateprofile').show();
+	        	}
+			};
+
+	        db.transaction(function(tx) {
+				tx.executeSql('SELECT * FROM profile', [], querySuccess, sqlError);
+	    	});
+	    });
+	    
+	    
+	    // start watching your location
+	    var geolocationSuccess = function(position) {
+			$('#form *[name=geolocation]').val(position.coords.latitude+','+position.coords.longitude);
+	    };
+		watch = navigator.geolocation.watchPosition(geolocationSuccess);
+	}
+	function doupdate()
+	{
+		savedata();
+	}
+	function doregister()
+	{
+		savedata();	
+	}
+	function savedata()
+	{
+		var replaceRow = function(tx) {
+			$('#form *[name]').each(function(idx,e) { 
+				tx.executeSql('REPLACE INTO profile values (?,?)', [e.name, e.value]);
+			});
+		};
+		
+		db.transaction(replaceRow, sqlError,function() { 
+			// upload to server
+			$.post('http://wsatp.com/barcamp.php?a=save', $('#form *[name]').serialize(), function(r) { 
+				if (r!='OK')
+					alert(r);
+				else
+					alert('Done!');
+			});
+		});
+	}
+	
+	// take picture as profile
+	//
+    function onPhotoDataSuccess(imageData) {
+      // Uncomment to view the base64 encoded image data
+      // console.log(imageData);
+      $('#form *[name=photo]').val(imageData);
+      $('#photo').attr('src', "data:image/jpeg;base64,"+imageData);
+    }
+
+
+	function snap() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
+      navigator.camera.getPicture(onPhotoDataSuccess, sqlError, { quality: 75, targetWidth: 300, targetHeight:300, allowEdit: true, destinationType: navigator.camera.DestinationType.DATA_URL });	 
+      return false;
+    }
+    
+	function myqr() {
+		var email = $('#form *[name=email]').val();
+		if (email=='') { alert('Dude, your email is blank!'); return; }
+		$('#qrcode').html('').qrcode({width:300,height:300,text: "i<3barcamp://"+email});
+	}
+	
+	</script>
+	    <link rel="stylesheet" href="screen.css" />
+  </head>
+  <body>
+
+	<form id="form">
+		<input placeholder="name" name="name" required>	
+		<input placeholder="email" name="email" type="email" required>	
+		<input placeholder="occupation" name="occupation" required>	
+		<input placeholder="age" name="age" required>	
+		<input placeholder="geolocation" name="geolocation" required>
+		<textarea placeholder="biography" name="bio"></textarea>
+		<textarea type="hidde" name="photo"></textarea> <a class="button" id="snap">Snap Photo</a>
+		<img id="photo">
+	</form>
+
+	<div id="qrcode">
+      <a class="button" id="myqr">Show my QR</a>      
+	</div>
+
+      <a class="button g" id="register" style="display:none">Register!</a>      
+      <a class="button g" id="updateprofile" style="display:none">Update Info</a>      
+
+      <a class="button" href="index.html">Home</a>      
+
+      
+  </body>
+</html>
+<!-- for non device, we hv to fake the device ready -->
+<script>
+$(function() {
+//	onDeviceReady();
+	
+	$('#register').click(doregister)
+	$('#updateprofile').click(doupdate);
+	$('#snap').click(snap);
+	$('#myqr').click(myqr);
+});
+</script>
