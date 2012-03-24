@@ -78,7 +78,7 @@
 		6CB5F78B151AE62F0020EC89 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainViewController.xib; path = Classes/MainViewController.xib; sourceTree = "<group>"; };
 		6CB5F78E151AE62F0020EC89 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = Plugins/README; sourceTree = "<group>"; };
 		6CB5F78F151AE62F0020EC89 /* verify.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = verify.sh; sourceTree = "<group>"; };
-		6CB5F796151AE74F0020EC89 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
+		6CB5F796151AE74F0020EC89 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = /Users/yinsee/Desktop/BarcampPG/www; sourceTree = "<absolute>"; };
 		6CB5F79E151B2FB30020EC89 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CDVBarcodeScanner.mm; sourceTree = "<group>"; };
 		6CB5F79F151B2FB30020EC89 /* zxing-all-in-one.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "zxing-all-in-one.cpp"; sourceTree = "<group>"; };
 		6CB5F7A0151B2FB30020EC89 /* zxing-all-in-one.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "zxing-all-in-one.h"; sourceTree = "<group>"; };
