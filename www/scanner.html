@@ -35,8 +35,12 @@
 	*/
 	
 	document.addEventListener("deviceready", onDeviceReady, false);
+	
+	var contact = false;
+	
 	function onDeviceReady()
 	{
+		$('#addcontact').hide();
 		scanqr();
 	}
 	
@@ -45,24 +49,90 @@
 		window.plugins.barcodeScanner.scan(scannerSuccess, scannerFailure);
 	}
 
-
-	//------------------------------------------------------------------------------
 	function scannerSuccess(result) {
-		if (result.format=='QR_CODE' )
+		console.log(JSON.stringify(result));
+		if (result.cancelled===true) return;
+		if (result.format!='QR_CODE') { alert('Invalid code'); return; }
 		$('#output').html("Checking server");
 		$.getJSON('http://wsatp.com/barcamp.php', { a:'query', t:result.text }, function(r){
+			console.log(JSON.stringify(r));
+			if (!r || r==undefined || r.email==undefined) { $('#output').html('<p align=center><img src="troll.jpg"><br>Bad QR Code, try again.</p>'); return; }
 			var html = '';
+			contact = r;
 			html += '<br>Name: ' + r.name;
 			html += '<br>Email: ' + r.email;
+			html += '<br>Phone: ' + r.phone;
+			html += '<br>Company: ' + r.company;
+			html += '<br>Title: ' + r.title;
+			html += '<br>About: ' + r.about;
 			html += '<br>Photo: <img src="data:image/jpeg;base64,'+r.photo+'">';
 			html += '<br><img src="http://maps.google.com/maps/api/staticmap?center='+r.geolocation+'&amp;zoom=7&amp;size=300x300&amp;maptype=undefined&amp;markers='+r.geolocation+'&amp;sensor=false" alt="" />';
 			
 			$('#output').html(html);
+			$('#addcontact').show();
 		});
 	}
 	
 	function scannerFailure(message) {
 		alert('scan failed '+message)
+	}
+	
+	//------------------------------------------------------------------------------
+	function addcontact()
+	{
+		if (!contact) 
+		{
+			alert('No contact');
+			return;
+		}
+		 // create a new contact
+        var newContact = navigator.contacts.create();
+		
+		// name
+		var name = new ContactName();
+		name.givenName = contact.name;
+		newContact.name = name;
+		
+		//phone
+		var fields = [1];
+		fields[0] = new ContactField('mobile', contact.phone);
+		newContact.phoneNumbers = fields;
+		
+		//email
+		fields = [1];
+		fields[0] = new ContactField('work', contact.email);
+		newContact.emails = fields;
+	
+		//photo
+		fields = [1];
+		fields[0] = new ContactField('url', 'data:image/jpeg;base64,'+contact.photo);
+		newContact.photos = fields;
+		
+		//company
+		organizations = [1];
+		var org = new ContactOrganization();
+		org.name = contact.company;
+		org.title = contact.title;
+		organizations[0] = org;
+		newContact.organizations = organizations;
+				
+		// about
+		newContact.note = contact.about;
+		
+		var onSaveError = function (contactError) {
+    	    alert("Error = " + contactError.code);
+    	}
+    
+		newContact.save(
+			function() { 
+				alert('Saved to contact'); 
+			}, 
+			function (contactError) {
+	    	    alert("Error = " + contactError.code);
+	    	}
+		);
+		console.log('contact saved');
+		
 	}
 
 	</script>
@@ -71,10 +141,9 @@
   <body>
 
 	<a class="button g" id="scanqr">Scan QR</a>
-		<div style="min-height:300px" id="output"></div>
-
-      <a class="button" href="index.html">Home</a>      
-
+	<a class="button" id="addcontact" style="display:none">Add To Contact</a>
+	<div id="output"></div>	
+    <a class="button" href="index.html">Home</a>
       
   </body>
 </html>
@@ -83,5 +152,6 @@
 $(function() {
 //	onDeviceReady();
 	$('#scanqr').click(scanqr);
+	$('#addcontact').click(addcontact);
 });
 </script>

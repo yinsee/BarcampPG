@@ -2,6 +2,7 @@ body {
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	width:300px;
 	margin:10px;padding:0;
+	min-height:300px;
 }
 
 *{ 
