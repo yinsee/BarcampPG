@@ -41,6 +41,9 @@
 		6CB5F7A4151B31D00020EC89 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F7A3151B31D00020EC89 /* CoreVideo.framework */; };
 		6CB5F7A6151B31D60020EC89 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F7A5151B31D60020EC89 /* AssetsLibrary.framework */; };
 		6CB5F7A8151B31F30020EC89 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F7A7151B31F30020EC89 /* libiconv.dylib */; };
+		6CEFEE09155990600085DC1E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CEFEE08155990600085DC1E /* Default@2x.png */; };
+		6CEFEE0B155991150085DC1E /* icon2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CEFEE0A155991150085DC1E /* icon2x.png */; };
+		6CEFEE0D155991170085DC1E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CEFEE0C155991170085DC1E /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +88,9 @@
 		6CB5F7A3151B31D00020EC89 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		6CB5F7A5151B31D60020EC89 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		6CB5F7A7151B31F30020EC89 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		6CEFEE08155990600085DC1E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		6CEFEE0A155991150085DC1E /* icon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2x.png; sourceTree = "<group>"; };
+		6CEFEE0C155991170085DC1E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +131,9 @@
 		6CB5F72C151AE62E0020EC89 = {
 			isa = PBXGroup;
 			children = (
+				6CEFEE0C155991170085DC1E /* icon.png */,
+				6CEFEE0A155991150085DC1E /* icon2x.png */,
+				6CEFEE08155990600085DC1E /* Default@2x.png */,
 				6C9F8DFD151D8CEB00E177DB /* 57.png */,
 				6C9F8DFB151D8CC800E177DB /* Default.png */,
 				6CB5F758151AE62E0020EC89 /* BarcampPG */,
@@ -326,6 +335,9 @@
 				6CB5F797151AE74F0020EC89 /* www in Resources */,
 				6C9F8DFC151D8CC800E177DB /* Default.png in Resources */,
 				6C9F8DFE151D8CEB00E177DB /* 57.png in Resources */,
+				6CEFEE09155990600085DC1E /* Default@2x.png in Resources */,
+				6CEFEE0B155991150085DC1E /* icon2x.png in Resources */,
+				6CEFEE0D155991170085DC1E /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

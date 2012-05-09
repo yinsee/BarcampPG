@@ -1,157 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-	<meta charset="utf-8">
-	<!-- iPad/iPhone specific css below, add after your main css >
-	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-	-->
-	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
-	<script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>
-    <script type="text/javascript" charset="utf-8" src="jquery.js"></script>
-    <script type="text/javascript" charset="utf-8" src="barcodescanner.js"></script>
-    <script type="text/javascript">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
-	
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	/*
-	function handleOpenURL(url)
-	{
-		// TODO: do something with the url passed in.
-	}
-	*/
-	
-	document.addEventListener("deviceready", onDeviceReady, false);
-	
-	var contact = false;
-	
-	function onDeviceReady()
-	{
-		$('#addcontact').hide();
-		scanqr();
-	}
-	
-	function scanqr()
-	{
-		window.plugins.barcodeScanner.scan(scannerSuccess, scannerFailure);
-	}
-
-	function scannerSuccess(result) {
-		console.log(JSON.stringify(result));
-		if (result.cancelled===true) return;
-		if (result.format!='QR_CODE') { alert('Invalid code'); return; }
-		$('#output').html("Checking server");
-		$.getJSON('http://wsatp.com/barcamp.php', { a:'query', t:result.text }, function(r){
-			console.log(JSON.stringify(r));
-			if (!r || r==undefined || r.email==undefined) { $('#output').html('<p align=center><img src="troll.jpg"><br>Bad QR Code, try again.</p>'); return; }
-			var html = '';
-			contact = r;
-			html += '<br>Name: ' + r.name;
-			html += '<br>Email: ' + r.email;
-			html += '<br>Phone: ' + r.phone;
-			html += '<br>Company: ' + r.company;
-			html += '<br>Title: ' + r.title;
-			html += '<br>About: ' + r.about;
-			html += '<br>Photo: <img src="data:image/jpeg;base64,'+r.photo+'">';
-			html += '<br><img src="http://maps.google.com/maps/api/staticmap?center='+r.geolocation+'&amp;zoom=7&amp;size=300x300&amp;maptype=undefined&amp;markers='+r.geolocation+'&amp;sensor=false" alt="" />';
-			
-			$('#output').html(html);
-			$('#addcontact').show();
-		});
-	}
-	
-	function scannerFailure(message) {
-		alert('scan failed '+message)
-	}
-	
-	//------------------------------------------------------------------------------
-	function addcontact()
-	{
-		if (!contact) 
-		{
-			alert('No contact');
-			return;
-		}
-		 // create a new contact
-        var newContact = navigator.contacts.create();
-		
-		// name
-		var name = new ContactName();
-		name.givenName = contact.name;
-		newContact.name = name;
-		
-		//phone
-		var fields = [1];
-		fields[0] = new ContactField('mobile', contact.phone);
-		newContact.phoneNumbers = fields;
-		
-		//email
-		fields = [1];
-		fields[0] = new ContactField('work', contact.email);
-		newContact.emails = fields;
-	
-		//photo
-		fields = [1];
-		fields[0] = new ContactField('url', 'data:image/jpeg;base64,'+contact.photo);
-		newContact.photos = fields;
-		
-		//company
-		organizations = [1];
-		var org = new ContactOrganization();
-		org.name = contact.company;
-		org.title = contact.title;
-		organizations[0] = org;
-		newContact.organizations = organizations;
-				
-		// about
-		newContact.note = contact.about;
-		
-		var onSaveError = function (contactError) {
-    	    alert("Error = " + contactError.code);
-    	}
-    
-		newContact.save(
-			function() { 
-				alert('Saved to contact'); 
-			}, 
-			function (contactError) {
-	    	    alert("Error = " + contactError.code);
-	    	}
-		);
-		console.log('contact saved');
-		
-	}
-
-	</script>
-	    <link rel="stylesheet" href="screen.css" />
-  </head>
-  <body>
-
-	<a class="button g" id="scanqr">Scan QR</a>
-	<a class="button" id="addcontact" style="display:none">Add To Contact</a>
-	<div id="output"></div>	
-    <a class="button" href="index.html">Home</a>
-      
-  </body>
+    <body>
+        <div data-role="page" data-id="scanner">
+            <div data-role="header" data-id="header" data-position="fixed">
+                <a href="profile.html" data-iconpos="notext" data-role="button" data-icon="gear">&nbsp;</a>
+                <h1>BarcampPG 2012</h1>
+                <div data-role="controlgroup" data-type="horizontal" style="display:inline-block;top:0px;right:5px;position:absolute;">
+                    <a href="index.html" data-iconpos="notext" data-role="button" data-theme="c" data-icon="info">&nbsp;</a>
+                    <a href="index.html" data-iconpos="notext" data-role="button" data-theme="c" data-icon="search">&nbsp;</a>
+                </div>
+            </div>
+            
+            <div data-role="footer" data-id="app-footer" data-position="fixed" class="nav-glyphish-example">
+                <div data-role="navbar" class="nav-glyphish-example">
+                    <ul>
+                        <li><a data-icon="custom" id="home" href="index.html">Home</a></li>
+                        <li><a data-icon="custom" id="map" href="map.html">Map</a></li>      
+                        <li><a data-icon="custom" id="camera" href="scanner.html">Scanner</a></li>
+                        <li><a data-icon="custom" id="qrcode" href="qrcode.html">QR Code</a></li>    
+                        <li><a data-icon="custom" id="sponsor" href="sponsor.html">Sponsor</a></li>      
+                    </ul>
+                </div>
+            </div>
+            
+            <div data-role="content">
+                <a data-role="button" id="scanner-scanqr">Scan QR</a>
+                <a data-role="button" id="scanner-addcontact" style="display:none">Add To Contact</a>
+                <div id="scanner-output"></div>	
+            </div>
+        </div>
+    </body>
 </html>
-<!-- for non device, we hv to fake the device ready -->
-<script>
-$(function() {
-//	onDeviceReady();
-	$('#scanqr').click(scanqr);
-	$('#addcontact').click(addcontact);
-});
-</script>

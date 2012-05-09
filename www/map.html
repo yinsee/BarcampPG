@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <div data-role="page" data-id="profile">
+        <div data-role="page" data-id="map">
             <div data-role="header" data-id="header" data-position="fixed">
                 <a href="profile.html" data-iconpos="notext" data-role="button" data-icon="gear">&nbsp;</a>
                 <h1>BarcampPG 2012</h1>
@@ -24,24 +24,13 @@
             </div>
             
             <div data-role="content">
+                <h1>Our Sponsors</h1>
                 
-                <form id="form">
-                    <input placeholder="name" name="name" required/>	
-                    <input placeholder="email" name="email" type="email" required/>	
-                    <input placeholder="phone" name="phone" required/>	
-                    <input placeholder="company" name="company" required/>	
-                    <input placeholder="job title" name="title" required/>	
-                    <textarea placeholder="about yourself" name="about"></textarea>
-                    <input type="hidden" name="geolocation"/>
-                    <input type="hidden" name="photo"/>
-                    <a data-role="button" id="snap">Snap Photo</a>
-                    <img id="photo"/>
-                </form>
-                
-                <a data-role="button" data-theme="b" id="register" style="display:none">Register!</a>      
-                <a data-role="button" id="updateprofile" style="display:none">Update Info</a>      
-                
+                <ul data-role="listview" data-inset="true">
+                    <li>Websmith ATP</li>
+                    <li>ImageDNS</li>
+                </ul>
             </div>
-            
-            </body>
+        </div>
+    </body>
 </html>
