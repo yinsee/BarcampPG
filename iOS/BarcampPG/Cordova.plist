@@ -24,6 +24,8 @@
 	<array>
 		<string>wsatp.com</string>
 		<string>maps.google.com</string>
+		<string>fb.com</string>
+		<string>github.com</string>
 	</array>
 	<key>Plugins</key>
 	<dict>

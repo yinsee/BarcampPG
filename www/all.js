@@ -311,4 +311,7 @@ function addcontact()
 // sponsor
 function init_sponsor()
 {
+    $('#sponsorlist').load('http://wsatp.com/barcamp.php?a=sponsors', function() { 
+                           $('#sponsorlist').listview('refresh');
+    });
 }

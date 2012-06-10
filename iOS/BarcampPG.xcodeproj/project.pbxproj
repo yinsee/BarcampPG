@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6C9F8DFC151D8CC800E177DB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9F8DFB151D8CC800E177DB /* Default.png */; };
-		6C9F8DFE151D8CEB00E177DB /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C9F8DFD151D8CEB00E177DB /* 57.png */; };
 		6CB5F73F151AE62E0020EC89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F73E151AE62E0020EC89 /* Foundation.framework */; };
 		6CB5F741151AE62E0020EC89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F740151AE62E0020EC89 /* UIKit.framework */; };
 		6CB5F743151AE62E0020EC89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB5F742151AE62E0020EC89 /* CoreGraphics.framework */; };
@@ -48,7 +47,6 @@
 
 /* Begin PBXFileReference section */
 		6C9F8DFB151D8CC800E177DB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		6C9F8DFD151D8CEB00E177DB /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
 		6CB5F73A151AE62E0020EC89 /* BarcampPG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcampPG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB5F73E151AE62E0020EC89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6CB5F740151AE62E0020EC89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -134,7 +132,6 @@
 				6CEFEE0C155991170085DC1E /* icon.png */,
 				6CEFEE0A155991150085DC1E /* icon2x.png */,
 				6CEFEE08155990600085DC1E /* Default@2x.png */,
-				6C9F8DFD151D8CEB00E177DB /* 57.png */,
 				6C9F8DFB151D8CC800E177DB /* Default.png */,
 				6CB5F758151AE62E0020EC89 /* BarcampPG */,
 				6CB5F73D151AE62E0020EC89 /* Frameworks */,
@@ -334,7 +331,6 @@
 				6CB5F790151AE62F0020EC89 /* verify.sh in Resources */,
 				6CB5F797151AE74F0020EC89 /* www in Resources */,
 				6C9F8DFC151D8CC800E177DB /* Default.png in Resources */,
-				6C9F8DFE151D8CEB00E177DB /* 57.png in Resources */,
 				6CEFEE09155990600085DC1E /* Default@2x.png in Resources */,
 				6CEFEE0B155991150085DC1E /* icon2x.png in Resources */,
 				6CEFEE0D155991170085DC1E /* icon.png in Resources */,
