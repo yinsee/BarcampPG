@@ -1,0 +1,53 @@
+
+.nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 32px !important; }
+.nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 25px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+.nav-glyphish-example .ui-btn-up-a, .nav-glyphish-example .ui-btn-hover-a { border: none; }
+
+#home .ui-icon { background:  url(home.png) 50% 50% no-repeat; background-size:22px 23px; }
+#map .ui-icon { background:  url(map.png) 50% 50% no-repeat; background-size:22px 26px;   }
+#camera .ui-icon { background:  url(camera.png) 50% 50% no-repeat;  background-size:32px 24px; }
+#qrcode .ui-icon { background:  url(qrcode.png) 50% 50% no-repeat; background-size:24px 25px;  }
+#sponsor .ui-icon { background:  url(sponsor.png) 50% 50% no-repeat; background-size:26px 25px; }
+
+
+.ui-header .ui-title { margin: .6em 20% .8em; }
+
+/* home */
+#clock {
+    position:absolute;
+    left:8%;
+    letter-spacing:-1px;
+    font-family:"HelveticaNeue";
+}
+
+#clock_day em {
+    display:block;
+    font-style:normal;
+    font-size:1.7em;
+    font-weight:bold;
+    line-height:.7em;
+    margin-top:.2em;
+}
+#clock_day {
+    position:absolute;
+    display:block;
+    width:93px; height:128px;
+    background:url(daysbg.png); background-size:93px 128px;
+    text-align:center;
+    color:#edd8a3;
+    font-size:40px;
+    text-shadow:0 -1px 0px rgba(0,0,0,.5);
+}
+#clock_time em {
+    color:#d44e46;
+    font-style:normal;
+}
+#clock_time {
+    position:absolute;
+    display:block;  
+    font-size:30px;
+    left:100px;
+    line-height:90px;
+    white-space:nowrap;
+
+}
