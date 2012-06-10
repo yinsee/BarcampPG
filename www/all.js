@@ -32,7 +32,7 @@ function onDeviceReady()
     $('[data-role=page]').live('pagehide', function (event) { 
                                var id = $(this).attr('data-id');
                                  if(id=='profile') deinit_profile();
-//                               if(id=='map') deinit_map();
+//                                 if(id=='map') deinit_map();
 //                               if(id=='scanner') deinit_scanner();
 //                               if(id=='qrcode') deinit_qrcode();
 //                               if(id=='sponsor') deinit_sponsor();
@@ -164,6 +164,7 @@ function doregister()
 }
 function savedata()
 {
+    $.mobile.showPageLoadingMsg();
     var replaceRow = function(tx) {
         $('#form *[name]').each(function(idx,e) { 
                                 tx.executeSql('REPLACE INTO profile values (?,?)', [e.name, e.value]);
@@ -179,6 +180,7 @@ function savedata()
                           alert('Done!');
                           });
                    });
+    $.mobile.hidePageLoadingMsg();
 }
 
 // take picture as profile
@@ -202,10 +204,70 @@ function snap() {
 }
 
 // map
+var map;
+var myLatlng = new google.maps.LatLng(-33, 151); // simply plot
+function plotmap()
+{
+    var myOptions = {
+    center: myLatlng,
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map_element = document.getElementById("map_canvas");
+    map = new google.maps.Map(map_element, myOptions);
+}
+
+function plotusers()
+{
+    // retrieve user list from server and plots
+    $.getJSON('http://wsatp.com/barcamp.php', { a:'map' }, function(r){
+//                console.log(JSON.stringify(r));
+                        $(r).each(function(idx,e){
+                                  var s = e.loc.split(/,/);
+                                  var myLatLng = new google.maps.LatLng(s[0],s[1]);  
+                                  var infowindow = new google.maps.InfoWindow({ content: '<div id="content">'+e.content+'</div>' });
+                                  var marker = new google.maps.Marker({
+                                       position: myLatLng,
+                                       map: map,
+                                       title: e.name,
+                                       icon:'http://wsatp.com/face.php?_id='+e.id
+                                  });
+                                  
+                                  
+                                  google.maps.event.addListener(marker, 'click', function() {
+                                                                infowindow.open(map,marker);
+                                                                });
+                        });
+              });
+}
+
 function init_map()
 {
+    map = false;
+    $.mobile.showPageLoadingMsg();
+    
+    var win = function(position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+       
+        myLatlng = new google.maps.LatLng(lat, long);
+        plotmap();
+//        console.log('loc changed');
+        
+        plotusers();
+    };
+    
+    var fail = function(e) {
+        $.mobile.hidePageLoadingMsg();
+        alert('Can\'t retrieve position.\nError: ' + e);
+        plotmap();
+        plotusers();
+    };
+    
+    watchID = navigator.geolocation.getCurrentPosition(win, fail);
 
 }
+
 
 // scanner
 var contact = false;
@@ -224,12 +286,12 @@ function scanqr()
 }
 
 function scannerSuccess(result) {
-    console.log(JSON.stringify(result));
+//    console.log(JSON.stringify(result));
     if (result.cancelled===true) return;
     if (result.format!='QR_CODE') { alert('Invalid code'); return; }
     $('#scanner-output').html("Checking server");
     $.getJSON('http://wsatp.com/barcamp.php', { a:'query', t:result.text }, function(r){
-              console.log(JSON.stringify(r));
+//              console.log(JSON.stringify(r));
               if (!r || r==undefined || r.email==undefined) { $('#scanner-output').html('<p align=center><img src="troll.jpg"><br>Bad QR Code, try again.</p>'); return; }
               var html = '';
               contact = r;
@@ -304,7 +366,7 @@ function addcontact()
                     alert("Error = " + contactError.code);
                     }
                     );
-    console.log('contact saved');
+//    console.log('contact saved');
     
 }
 
